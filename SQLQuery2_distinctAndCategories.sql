@@ -219,3 +219,17 @@ from NorthwindTraders.dbo.Products as P
 
 EXEC SP_TABLES
 
+select Shippers.CompanyName
+from NorthwindTraders.dbo.Shippers
+
+use NorthwindTraders
+go
+
+select FirstName, LastName, HireDate, City
+from Employees
+
+select	e.LastName,
+		e.FirstName,
+		e.BirthDate
+from Employees e
+order by e.BirthDate desc

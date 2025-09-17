@@ -17,80 +17,80 @@ PRESS F5 TO EXECUTE THE SCRIPT.
 
 USE [master]
 GO
-/****** Object:  Database [username_Northwind]    Script Date: 6/16/2021 9:41:32 AM ******/
-DROP DATABASE if exists [username_Northwind]
+/****** Object:  Database [dkinganjatou1_Northwind]    Script Date: 6/16/2021 9:41:32 AM ******/
+DROP DATABASE if exists [dkinganjatou1_Northwind]
 GO
-/****** Object:  Database [username_Northwind]    Script Date: 6/16/2021 9:41:32 AM ******/
-CREATE DATABASE [username_Northwind]
+/****** Object:  Database [dkinganjatou1_Northwind]    Script Date: 6/16/2021 9:41:32 AM ******/
+CREATE DATABASE [dkinganjatou1_Northwind]
 GO
-ALTER DATABASE [username_Northwind] SET COMPATIBILITY_LEVEL = 140
+ALTER DATABASE [dkinganjatou1_Northwind] SET COMPATIBILITY_LEVEL = 140
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
 begin
-EXEC [username_Northwind].[dbo].[sp_fulltext_database] @action = 'enable'
+EXEC [dkinganjatou1_Northwind].[dbo].[sp_fulltext_database] @action = 'enable'
 end
 GO
-ALTER DATABASE [username_Northwind] SET ANSI_NULL_DEFAULT OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET ANSI_NULL_DEFAULT OFF 
 GO
-ALTER DATABASE [username_Northwind] SET ANSI_NULLS OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET ANSI_NULLS OFF 
 GO
-ALTER DATABASE [username_Northwind] SET ANSI_PADDING OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET ANSI_PADDING OFF 
 GO
-ALTER DATABASE [username_Northwind] SET ANSI_WARNINGS OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET ANSI_WARNINGS OFF 
 GO
-ALTER DATABASE [username_Northwind] SET ARITHABORT OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET ARITHABORT OFF 
 GO
-ALTER DATABASE [username_Northwind] SET AUTO_CLOSE OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET AUTO_CLOSE OFF 
 GO
-ALTER DATABASE [username_Northwind] SET AUTO_SHRINK OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET AUTO_SHRINK OFF 
 GO
-ALTER DATABASE [username_Northwind] SET AUTO_UPDATE_STATISTICS ON 
+ALTER DATABASE [dkinganjatou1_Northwind] SET AUTO_UPDATE_STATISTICS ON 
 GO
-ALTER DATABASE [username_Northwind] SET CURSOR_CLOSE_ON_COMMIT OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET CURSOR_CLOSE_ON_COMMIT OFF 
 GO
-ALTER DATABASE [username_Northwind] SET CURSOR_DEFAULT  GLOBAL 
+ALTER DATABASE [dkinganjatou1_Northwind] SET CURSOR_DEFAULT  GLOBAL 
 GO
-ALTER DATABASE [username_Northwind] SET CONCAT_NULL_YIELDS_NULL OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET CONCAT_NULL_YIELDS_NULL OFF 
 GO
-ALTER DATABASE [username_Northwind] SET NUMERIC_ROUNDABORT OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET NUMERIC_ROUNDABORT OFF 
 GO
-ALTER DATABASE [username_Northwind] SET QUOTED_IDENTIFIER OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET QUOTED_IDENTIFIER OFF 
 GO
-ALTER DATABASE [username_Northwind] SET RECURSIVE_TRIGGERS OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET RECURSIVE_TRIGGERS OFF 
 GO
-ALTER DATABASE [username_Northwind] SET  ENABLE_BROKER 
+ALTER DATABASE [dkinganjatou1_Northwind] SET  ENABLE_BROKER 
 GO
-ALTER DATABASE [username_Northwind] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
 GO
-ALTER DATABASE [username_Northwind] SET DATE_CORRELATION_OPTIMIZATION OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET DATE_CORRELATION_OPTIMIZATION OFF 
 GO
-ALTER DATABASE [username_Northwind] SET TRUSTWORTHY OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET TRUSTWORTHY OFF 
 GO
-ALTER DATABASE [username_Northwind] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET ALLOW_SNAPSHOT_ISOLATION OFF 
 GO
-ALTER DATABASE [username_Northwind] SET PARAMETERIZATION SIMPLE 
+ALTER DATABASE [dkinganjatou1_Northwind] SET PARAMETERIZATION SIMPLE 
 GO
-ALTER DATABASE [username_Northwind] SET READ_COMMITTED_SNAPSHOT OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET READ_COMMITTED_SNAPSHOT OFF 
 GO
-ALTER DATABASE [username_Northwind] SET HONOR_BROKER_PRIORITY OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET HONOR_BROKER_PRIORITY OFF 
 GO
-ALTER DATABASE [username_Northwind] SET RECOVERY FULL 
+ALTER DATABASE [dkinganjatou1_Northwind] SET RECOVERY FULL 
 GO
-ALTER DATABASE [username_Northwind] SET  MULTI_USER 
+ALTER DATABASE [dkinganjatou1_Northwind] SET  MULTI_USER 
 GO
-ALTER DATABASE [username_Northwind] SET PAGE_VERIFY CHECKSUM  
+ALTER DATABASE [dkinganjatou1_Northwind] SET PAGE_VERIFY CHECKSUM  
 GO
-ALTER DATABASE [username_Northwind] SET DB_CHAINING OFF 
+ALTER DATABASE [dkinganjatou1_Northwind] SET DB_CHAINING OFF 
 GO
-ALTER DATABASE [username_Northwind] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+ALTER DATABASE [dkinganjatou1_Northwind] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
 GO
-ALTER DATABASE [username_Northwind] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+ALTER DATABASE [dkinganjatou1_Northwind] SET TARGET_RECOVERY_TIME = 60 SECONDS 
 GO
-ALTER DATABASE [username_Northwind] SET DELAYED_DURABILITY = DISABLED 
+ALTER DATABASE [dkinganjatou1_Northwind] SET DELAYED_DURABILITY = DISABLED 
 GO
-ALTER DATABASE [username_Northwind] SET QUERY_STORE = OFF
+ALTER DATABASE [dkinganjatou1_Northwind] SET QUERY_STORE = OFF
 GO
-USE [username_Northwind]
+USE [dkinganjatou1_Northwind]
 GO
 /****** Object:  Table [dbo].[Customers]    Script Date: 6/16/2021 9:41:32 AM ******/
 SET ANSI_NULLS ON
@@ -4404,5 +4404,5 @@ ORDER BY Products.UnitPrice DESC
 GO
 USE [master]
 GO
-ALTER DATABASE [username_Northwind] SET  READ_WRITE 
+ALTER DATABASE [dkinganjatou1_Northwind] SET  READ_WRITE 
 GO

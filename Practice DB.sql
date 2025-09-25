@@ -16,15 +16,15 @@ PRESS F5 TO EXECUTE THE SCRIPT.
 */
 
 
-use master
-go
+--use master
+--go
 
-drop database if exists [username_practice]
-go
-create database [username_practice]
-go
+--drop database if exists [dkinganjatou1_practice]
+--go
+--create database [dkinganjatou1_practice]
+--go
 
-use [username_practice]
+use dkinganjatou1_practice
 go
 
 CREATE TABLE Customers (

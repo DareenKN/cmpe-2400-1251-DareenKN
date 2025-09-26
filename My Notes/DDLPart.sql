@@ -17,11 +17,11 @@ go
 
 -- drop statement should be conditional
 -- to avoid error 
---drop database if exists harsimran_test_1251_demo01_A02
+--drop database if exists dkinganjatou1_test_1251_demo01_A02
 --go
 
 -- create new database: like creating a shelf in library 
---create database harsimran_test_1251_demo01_A02
+--create database dkinganjatou1_test_1251_demo01_A02
 --go
 
 -- Now we have shelf, I need books/ tables
@@ -77,7 +77,7 @@ values( 'Simran', 'Aulaka', '780-000-0000', '0000 0 st NW Edmonton', 'T6T0A0')
 
 insert into customer 
 	( firstname, lastname, phone, address, postalcode)
-values( 'Harsimran', 'Aulaka', '780-000-0000', '0000 0 st NW Edmonton', 'T6T0A0')
+values( 'dkinganjatou1', 'Aulaka', '780-000-0000', '0000 0 st NW Edmonton', 'T6T0A0')
 
 
 select top 1 customerid
@@ -86,3 +86,28 @@ order by customerid desc
 
 select *
 from customer
+
+select	dateadd(dd, 4, getdate()) 'Date after 4 days',
+		dateadd(mm, 6, getdate()) 'Date after 6 months',
+		dateadd(hh, 70, getdate()) 'Date after 70 hours'
+
+/*
+datediff() - returns the difference between twon dates
+Syntax : datediff(datepart , startValue, Enddate)
+*/
+
+select	datediff(dd, '2025-09-02', getdate() ) ' Number of days since semester starts',
+		datediff(hh, '2025-09-02', getdate() ) ' Number of hours since semester starts'
+-- 543 - 18 - 10 = 515 7 * 22 = 154 515 - 154 = 461
+
+-- Ex1 : List all the orders which are shipped within 4 days after order is placed
+
+use dkinganjatou1_Northwind
+go
+select	orderdate,
+		isnull(cast(ShippedDate as char(20)), 'n/a') as 'ShippedDate',
+		isnull(datediff(dd, OrderDate, ShippedDate), 0) as 'NumberofDays'
+from Orders
+-- isnull(value, replaceValue) 
+--where datediff(dd, OrderDate, ShippedDate) = 4 -- Just after 4 days
+order by NumberofDays

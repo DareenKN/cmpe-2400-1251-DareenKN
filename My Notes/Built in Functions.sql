@@ -4,14 +4,14 @@
 use dkinganjatou1_Northwind
 go
 
-declare @numberOfOrder int  
+declare @numberOfOrders int  
 -- count() - will count the number of records/rows 
-select @numberOfOrder= count(*) -- assigning value of count to variable
+select @numberOfOrders= count(*) -- assigning value of count to variable
 from orders
 -- cast is used to convert int[numberOfOrder] value to string value
-print 'Number of orders : ' + cast(@numberOfOrder as varchar(5))
+print 'Number of orders : ' + cast(@numberOfOrders as varchar(5))
 -- covert function can be used to convert int[numberOfOrder] value to string value
-print 'Number of orders : ' + convert(varchar(5), @numberOfOrder)
+print 'Number of orders : ' + convert(varchar(5), @numberOfOrders)
 
 -- List order shipped within 10 days 
 select OrderDate,

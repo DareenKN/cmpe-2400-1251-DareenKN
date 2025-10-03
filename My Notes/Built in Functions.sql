@@ -17,7 +17,7 @@ print 'Number of orders : ' + convert(varchar(5), @numberOfOrders)
 select OrderDate,
 	   ShippedDate,
 	   datediff(dd, orderdate, shippeddate) 'Number of days it takes'
-from orders
+from dkinganjatou1_Northwind.dbo.orders
 where datediff(dd, orderdate, shippeddate) <=10
 	  and
 	  Shippeddate is not null  -- filtering out null values

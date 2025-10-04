@@ -21,7 +21,7 @@ go
 drop table if exists studenttocourse
 drop table if exists students
 drop table if exists instructors
-drop table if exists courses
+drop table if exists coursesz
 
 go
 

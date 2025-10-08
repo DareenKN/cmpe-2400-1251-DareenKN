@@ -65,3 +65,8 @@ where datediff(mm,orderdate,shippeddate)>=2
 select *
 from orders
 where datediff(hh,orderdate,shippeddate)<10
+
+select *
+from orders
+where month(ShippedDate) = month(getdate())
+	  and day(ShippedDate) = day(getdate())

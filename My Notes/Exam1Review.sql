@@ -4,7 +4,7 @@ go
 select	CategoryID,
 		[Description]
 from Categories
-where CategoryName = 'Beverages'
+where CategoryName like 'Beverages'
 
 use NorthwindTraders
 go
@@ -150,7 +150,7 @@ order by datediff(ss,orderdate,shippeddate) desc
 
 use Chinook
 go 
-select cast(GenreID as varchar(10)) + ': ' + Name as 'Genres'
+select cast(GenreID as varchar(10)) + ': ' + [Name] as 'Genres'
 from Genre
 
 use NorthwindTraders

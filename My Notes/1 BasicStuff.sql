@@ -2,7 +2,7 @@
 -- Author : Harsimranjot
 
 -- The use statement specifies which database to access
-use harsimrana_Northwind
+use dkinganjatou1_Northwind
 go
 -- go causes the current group of statements to be executed
 -- immediately by the query processor
@@ -37,18 +37,18 @@ select count(*) 'Number of Orders' from Orders
 -- Fully qualified names
 -- DatabaseName.SchemaName.TableName
 
-select * from harsimrana_Northwind.dbo.orders
+select * from dkinganjatou1_Northwind.dbo.orders
 
 --Ex. Select all authors from pubs database by using fully qualified names
 
 -- Selecting specific columns
-use harsimrana_Northwind
+use dkinganjatou1_Northwind
 go
 
 select OrderID as 'Order ID',
        customerId 'Customer ID',
        Orderdate
-from harsimrana_Northwind.dbo.orders
+from dkinganjatou1_Northwind.dbo.orders
 
 -- Columns Alias
 -- use as keywords to provide alias for your column
@@ -62,7 +62,7 @@ from harsimrana_Northwind.dbo.orders
 select s.first_name as 'Student First Name',
        s.last_name as 'Student Last Name',
        s.student_id 'Student ID'
-from harsimrana_ClassTrak.dbo.students as s -- You can use alias for table name as well
+from dkinganjatou1_ClassTrak.dbo.students as s -- You can use alias for table name as well
 
 -- Some Terms
 -- Table            -   Entity
@@ -75,7 +75,7 @@ from harsimrana_ClassTrak.dbo.students as s -- You can use alias for table name 
 -- Result ordering 
 -- select all authors
 
-use harsimrana_PublishersDB
+use dkinganjatou1_PublishersDB
 go
 select * 
 from authors
@@ -85,7 +85,7 @@ order by city desc
 -- order by column
 -- default is asc
 
-use harsimrana_PublishersDB
+use dkinganjatou1_PublishersDB
 go
 select au_id, 
        au_lname,

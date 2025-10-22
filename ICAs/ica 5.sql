@@ -6,5 +6,12 @@ group by ArtistId
 use NorthwindTraders
 go
 
-SELECT *
-from 
+select  CategoryId, 
+        sum(UnitsOnOrder) as 'On Order'
+from Products
+group by CategoryID
+
+select SupplierID
+from Products
+group by SupplierID
+having count(UnitsInStock) >= 2 AND 

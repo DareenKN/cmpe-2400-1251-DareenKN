@@ -2,7 +2,7 @@
 -- More built in function
 
 
-use dkinganjatou1_northwind
+use harsimrana_northwind
 go
 -- Globals
 

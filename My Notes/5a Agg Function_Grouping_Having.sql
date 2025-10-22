@@ -1,13 +1,13 @@
 use master
 go
 
---drop database if exists practice_dkn_grouping
+--drop database if exists practice_grouping
 --go
 
---create database practice_dkn_grouping
+--create database practice_grouping
 --go
 
-use practice_dkn_grouping
+use practice_grouping
 go
 
 drop table  if exists stickyNote
@@ -83,9 +83,10 @@ select color,
 	   avg(cast(number as float))  'Average',
 	   max(number) 'Max',
 	   min(number) 'Min'
-from stickyNote								--1
-where number is not null and number >= 0	--2
-group by color								--3
-having sum(number) > 3						--4
-order by sum(number)						--5
+from stickyNote
+
+where number is not null and number >= 0
+group by color
+having sum(number) > 3
+order by sum(number)
 

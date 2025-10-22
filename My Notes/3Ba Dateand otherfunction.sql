@@ -46,7 +46,7 @@ select datediff(dd, '2025-09-02', getdate() ) ' Number of days since semester st
 
 -- Ex1 : List all the orders which are shipped within 4 days after order is places
 
-use dkinganjatou1_northwind
+use harsimrana_northwind
 go
 select orderdate,
        isnull( cast(ShippedDate as char(20)), 'n/a') as 'Shipped Date', 

@@ -1,7 +1,7 @@
 -- Week 3 Day 1 16 Sep 2025
 -- Filtering Data Continue
 
-use dkinganjatou1_Northwind
+use harsimrana_Northwind
 go
 
 -- Between and operator
@@ -13,7 +13,7 @@ where UnitsInStock between 30 and 40
 -- boundary values are included
 
 select * 
-from dkinganjatou1_pubs.dbo.titles
+from harsimrana_pubs.dbo.titles
 where royalty between 10 and 16
 --where royalty>=10 and royalty <=16
 
@@ -72,7 +72,7 @@ where UnitsInStock = 5  or
 
 -- Break Time : 08:50 - 09:00 
 -- String comparison
-use dkinganjatou1_ClassTrak
+use harsimrana_ClassTrak
 go 
 
 select * 
@@ -165,11 +165,11 @@ where course_desc like '[^S-Y]%'
 
 -- null is a speacial value : NOTE: CHEAT SHEET
 select * 
-from dkinganjatou1_Northwind.dbo.Customers
+from harsimrana_Northwind.dbo.Customers
 where region is null
 
 select * 
-from dkinganjatou1_Northwind.dbo.Customers
+from harsimrana_Northwind.dbo.Customers
 where region is not null
 
 
@@ -181,7 +181,7 @@ where region is not null
 -- and create Practice Database- Script available 
 -- under database creation scripts
 
-use dkinganjatou1_practice
+use harsimrana_practice
 go
 
 select * 

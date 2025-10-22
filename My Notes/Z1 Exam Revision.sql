@@ -13,8 +13,8 @@ go
 -- Function					    :
 -- How to deal with null values :
 
-select isnull( cast(ShippedDate as varchar(10)), 'N/a') 'Null ShippedDate',
-       coalesce (orderdate,null, 'N/a')
+select isnull( cast(ShippedDate as varchar(10)), 'N/a'),
+       coalesce (orderdate, null, 'N/a')
 from orders
 where shippedDate is null 
 
@@ -91,7 +91,7 @@ order by 1
 
 
 
-use dkinganjatou1_IQSchool
+use harsimrana_IQSchool
 go
 
 --1. Select all the information from the club table
@@ -120,7 +120,7 @@ where CourseId like 'DMIT%'
 
 --5. Select the Staff names who have positionID of 3
 -- some experiments are done
-select firstname + ' : '+ lastname + ' : '+ cast(PositionID as varchar(10)) 'Name' ,
+select firstname + ' : '+ lastname + cast(PositionID as varchar(10)) 'Name' ,
        concat_ws(' : ',firstname , lastname, PositionID ) 'Name'
 from staff
 where PositionID = 3

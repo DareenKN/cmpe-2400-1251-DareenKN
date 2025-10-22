@@ -1,4 +1,3 @@
-
 -- Week 4 day 03: 26.09.2025
 -- bulit in functions
 

@@ -1,23 +1,23 @@
 -- Week 04 day 3: 25.09.2025
 -- Built in functions
 
-use dkinganjatou1_Northwind
+use harsimrana_Northwind
 go
 
-declare @numberOfOrders int  
+declare @numberOfOrder int  
 -- count() - will count the number of records/rows 
-select @numberOfOrders= count(*) -- assigning value of count to variable
+select @numberOfOrder= count(*) -- assigning value of count to variable
 from orders
 -- cast is used to convert int[numberOfOrder] value to string value
-print 'Number of orders : ' + cast(@numberOfOrders as varchar(5))
+print 'Number of orders : ' + cast(@numberOfOrder as varchar(5))
 -- covert function can be used to convert int[numberOfOrder] value to string value
-print 'Number of orders : ' + convert(varchar(5), @numberOfOrders)
+print 'Number of orders : ' + convert(varchar(5), @numberOfOrder)
 
 -- List order shipped within 10 days 
 select OrderDate,
 	   ShippedDate,
 	   datediff(dd, orderdate, shippeddate) 'Number of days it takes'
-from dkinganjatou1_Northwind.dbo.orders
+from orders
 where datediff(dd, orderdate, shippeddate) <=10
 	  and
 	  Shippeddate is not null  -- filtering out null values
@@ -51,7 +51,7 @@ select sqrt(25) as 'SqaureRoot of 25',
 	   floor(4.3),
 	   rand(),	  -- random value between 0 and 1
 	   square(4), --4 raise to power 4 
-	   sign(-7) -- sign -1 if negative 1 if number is positive 
+	   sign(-7), -- sign -1 if negative 1 if number is positive 
 
 -- BREAK TIME 09:10 am
 

@@ -19,11 +19,13 @@ where CategoryID = @DairyProductId
 
 -- NEW way
 -- List of products for category 'Dairy Products'
-select *        -- parent query
+select *
+-- parent query
 from products
-where CategoryID = ( select categoryid  -- Child/ sub query
-				     from Categories
-				     where CategoryName= 'Dairy Products'
+where CategoryID = ( select categoryid
+-- Child/ sub query
+from Categories
+where CategoryName= 'Dairy Products'
 				   )
 
 -- Need to find list of students score above class average
@@ -35,27 +37,31 @@ where CategoryID = ( select categoryid  -- Child/ sub query
 --where marks > ( select avg(marks) from students)
 
 -- List of products where category name starts with letter C
-select *      -- parent query
-from products p    -- observe the use of IN here becasue subquery is returning more than 1 value
+select *
+-- parent query
+from products p
+-- observe the use of IN here becasue subquery is returning more than 1 value
 where p.CategoryID in (  -- Child/ sub query 
 					select c.CategoryID
-					from categories  c
-					where CategoryName like 'C%'
+from categories  c
+where CategoryName like 'C%'
 				   )
 order by p.CategoryID
 
 use Publishers
 go
 
-select *   -- grand parent query
+select *
+-- grand parent query
 from authors a
 where a.au_id in (
-					select au_id      -- parent query
-					from titleauthor ta
-					where ta.title_id in (  -- grandchild
+					select au_id
+-- parent query
+from titleauthor ta
+where ta.title_id in (  -- grandchild
 										select t.title_id
-										from titles t
-										where type ='business'
+from titles t
+where type ='business'
 										)
 				 )
 order by a.au_lname
@@ -67,35 +73,65 @@ select*
 from products p
 where exists (
 				select *
-				from Categories C
-				where CategoryName = 'Dairy Products'
-				and c.CategoryID = p.CategoryID
+from Categories C
+where CategoryName = 'Dairy Products'
+	and c.CategoryID = p.CategoryID
 			 )
 
 select *
 from products p
 where p.CategoryID in (
 						select c.CategoryID
-						from categories c    
-						where CategoryName like 'C%'
+from categories c
+where CategoryName like 'C%'
 )
 
 select *
 from products p
 where exists (
-						select c.CategoryID
-						from categories c    
-						where CategoryName like 'C%'
-						and c.CategoryID = p.CategoryID
-)
+				select c.CategoryID
+				from categories c
+				where CategoryName like 'C%'
+				and c.CategoryID = p.CategoryID
+			 )
 
 -- You can put subqueries in your where, having, select list from clause
-select 	p.ProductID,
-		p.ProductName,
-		p.CategoryID,
-		(select c.CategoryName  -- It must return single values else it would break
-		from Categories c 
-		where CategoryID = 6) as 'CategoryName' -- Alias for Calculated column
+select p.ProductID,
+	p.ProductName,
+	p.CategoryID,
+	(select c.CategoryName
+	-- It must return single values else it would break
+	from Categories c
+	where CategoryID = 6) as 'CategoryName'
+-- Alias for Calculated column
+-- Try to find more than one category by commenting out the condition, Not possible
 
 from products p
 where p.CategoryID = 6
+
+-- Performance Consideration
+-- IN vs EXISTS
+/*
+	Exists is faster than IN when subquery result set is very large
+	In Clause is faster when the subquery result set is small
+
+	In cannot compare with NULL values whereas EXISTS can compare anything with NULL
+*/
+
+-- Your Boss wants to quickly check the lowest product price in the catalog
+-- You need to find the lowest price in the catalog.
+
+select *
+from Products p
+where p.UnitPrice = (
+						select min(UnitPrice)
+						from products
+					)
+
+select min(UnitPrice)
+from products
+
+-- Alternative Solution
+select top 1 with ties *
+from Products
+order by UnitPrice

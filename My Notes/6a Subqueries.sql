@@ -151,5 +151,16 @@ where exists (
 -- Uisng Exists here is not effiscient as = for this specific case since you are not joining multiple tables
 -- But it is a good practice exercise
 
+-- Exercise N02
+-- Find the product(s) that cost more than the average product price
+select *
+from Products p 
+where p.UnitPrice > (
+						select avg(UnitPrice)
+						from Products
+					)
+
+
+
 
 

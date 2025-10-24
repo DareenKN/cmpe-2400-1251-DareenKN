@@ -73,9 +73,9 @@ select*
 from products p
 where exists (
 				select *
-from Categories C
-where CategoryName = 'Dairy Products'
-	and c.CategoryID = p.CategoryID
+				from Categories C
+				where CategoryName = 'Dairy Products'
+					and c.CategoryID = p.CategoryID
 			 )
 
 select *

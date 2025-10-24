@@ -135,3 +135,21 @@ from products
 select top 1 with ties *
 from Products
 order by UnitPrice
+
+-- Try with Exists
+select *
+from Products p1
+where exists (
+				select *
+				from Products p2
+				where p1.UnitPrice = p2.UnitPrice
+				and p2.UnitPrice = (
+									select min(UnitPrice)
+									from Products p1
+								   )
+			 )
+-- Uisng Exists here is not effiscient as = for this specific case since you are not joining multiple tables
+-- But it is a good practice exercise
+
+
+

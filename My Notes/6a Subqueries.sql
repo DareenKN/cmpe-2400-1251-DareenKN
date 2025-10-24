@@ -160,7 +160,20 @@ where p.UnitPrice > (
 						from Products
 					)
 
+-- Exercise N03
+-- Find the products costlier than any product supplied by 'Exotic Liquids'
 
+select *
+from Products p1 
+where p1.UnitPrice > (
+						select max(UnitPrice)
+						from Products p2
+						where p2.SupplierID = (
+												select SupplierID
+												from Suppliers
+												where CompanyName = 'Exotic Liquids'
+											)
+					)
 
 
 

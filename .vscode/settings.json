@@ -1,2 +1,3 @@
 {
+    "mssql.resultFormat": "text"
 }

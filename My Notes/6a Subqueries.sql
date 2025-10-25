@@ -83,16 +83,16 @@ where exists (
 				select *
 				from Categories C
 				where CategoryName = 'Dairy Products'
-					and c.CategoryID = p.CategoryID
+				and c.CategoryID = p.CategoryID
 			 )
 
 select *
 from products p
 where p.CategoryID in (
 						select c.CategoryID
-from categories c
-where CategoryName like 'C%'
-)
+						from categories c
+						where CategoryName like 'C%'
+					  )
 
 select *
 from products p
@@ -104,13 +104,13 @@ where exists (
 			 )
 
 -- You can put subqueries in your where, having, select list from clause
-select p.ProductID,
-	p.ProductName,
-	p.CategoryID,
-	(select c.CategoryName
-	-- It must return single values else it would break
-	from Categories c
-	where CategoryID = 6) as 'CategoryName'
+select 	p.ProductID,
+		p.ProductName,
+		p.CategoryID,
+		(	select	c.CategoryName
+			-- It must return single values else it would break
+			from Categories c
+			where CategoryID = 6) as 'CategoryName'
 -- Alias for Calculated column
 -- Try to find more than one category by commenting out the condition, Not possible
 

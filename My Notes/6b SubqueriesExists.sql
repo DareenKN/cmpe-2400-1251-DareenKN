@@ -31,10 +31,10 @@ where exists (
 select *      -- parent query
 from products p    -- observe the use of IN here becasue subquery is returning more than 1 value
 where p.CategoryID in (  -- Child/ sub query 
-					select c.CategoryID
-					from categories  c
-					where CategoryName like 'C%'
-				   )
+						select c.CategoryID
+						from categories  c
+						where CategoryName like 'C%'
+					  )
 
 -- Rewrite this one using EXISTS
 
@@ -94,7 +94,7 @@ where exists (
 									)
 			   )
 -- using Exists here is not a efficient as = for this specific case 
---( snce your not joing multiple tables), but it is good practice to exercise 
+--( since your not joing multiple tables), but it is good practice to exercise 
 
 -- Ex02
 -- Find the product(s) that cost more than the average product price 

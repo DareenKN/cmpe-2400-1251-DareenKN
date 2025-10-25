@@ -1,7 +1,7 @@
 -- WEEK 08 Day 03: 24.10.2025
 -- Subqueries , Exists operator
 
-use harsimrana_Northwind
+use dkinganjatou1_Northwind
 go
 
 

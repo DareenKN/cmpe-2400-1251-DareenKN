@@ -32,7 +32,7 @@ where CategoryName= 'Dairy Products'
 -- Steps
 -- find avg  mark value for the class
 -- use that value to filter students
--- IT is just an example to understand it: you won't be to run this query
+-- IT is just an example to understand it: you won't be able to run this query
 --select * from students 
 --where marks > ( select avg(marks) from students)
 
@@ -41,28 +41,36 @@ select *
 -- parent query
 from products p
 -- observe the use of IN here becasue subquery is returning more than 1 value
-where p.CategoryID in (  -- Child/ sub query 
-					select c.CategoryID
-from categories  c
-where CategoryName like 'C%'
-				   )
+where p.CategoryID in 	(  -- Child/ sub query 
+							select c.CategoryID
+							from categories  c
+							where CategoryName like 'C%'
+				      	)
 order by p.CategoryID
+
+/*
+Exercise 1  Write a query to display the first name and last 
+name of all authors from the Publishers 
+database who write business books
+
+*/
 
 use Publishers
 go
 
-select *
+select 	au_fname as 'First Name',
+		au_lname as 'Last Name'
 -- grand parent query
 from authors a
 where a.au_id in (
 					select au_id
--- parent query
-from titleauthor ta
-where ta.title_id in (  -- grandchild
-										select t.title_id
-from titles t
-where type ='business'
-										)
+					-- parent query
+					from titleauthor ta
+					where ta.title_id in (  -- grandchild
+											select t.title_id
+											from titles t
+											where type ='business'
+										 )
 				 )
 order by a.au_lname
 
@@ -174,6 +182,5 @@ where p1.UnitPrice > (
 												where CompanyName = 'Exotic Liquids'
 											)
 					)
-
 
 

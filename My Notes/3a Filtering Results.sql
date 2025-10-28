@@ -1,7 +1,7 @@
 -- Week 2 Day 3 12 Sep 2025
 -- Filtering Data
 
-use harsimrana_Northwind
+use dkinganjatou1_Northwind
 go
 
 select distinct CITY as 'Customer City' 
@@ -38,11 +38,11 @@ C#	SQL
 */
 
 select *
-from harsimrana_Northwind.dbo.Employees
+from dkinganjatou1_Northwind.dbo.Employees
 where EmployeeID = 5   -- Employee id is 5
 
 select *
-from harsimrana_Northwind.dbo.Employees
+from dkinganjatou1_Northwind.dbo.Employees
 --where EmployeeID <> 5   -- Employee id is not 5
 where EmployeeID != 5   -- Employee id is not 5
 
@@ -65,7 +65,7 @@ Ex 01
  sorting involved		: No
  Change column headers	: No
 */
-use harsimrana_pubs
+use dkinganjatou1_pubs
 go
 
 select title_id,
@@ -83,7 +83,7 @@ select titles.title_id,
 	   titles.[type],
 	   titles.price,
 	   titles.royalty
-from harsimrana_pubs.dbo.titles
+from dkinganjatou1_pubs.dbo.titles
 where royalty > 10
 
 -- For typing convenience use alias for table name
@@ -92,7 +92,7 @@ select t.title_id,
 	   t.[type],
 	   t.price,
 	   t.royalty
-from harsimrana_pubs.dbo.titles as t
+from dkinganjatou1_pubs.dbo.titles as t
 where royalty > 10
 
 /*
@@ -116,7 +116,7 @@ select t.title_id,
 	   t.[type],
 	   t.price,
 	   t.royalty
-from harsimrana_pubs.dbo.titles as t
+from dkinganjatou1_pubs.dbo.titles as t
 where price <> 19.99
 order by price desc
 
@@ -148,7 +148,7 @@ select t.title_id,
 	   t.[type],
 	   t.price,
 	   t.royalty
-from harsimrana_pubs.dbo.titles as t
+from dkinganjatou1_pubs.dbo.titles as t
 where price >= 11 and royalty > 10
 
 /*
@@ -165,7 +165,7 @@ select t.title_id,
 	   t.[type],
 	   t.price,
 	   t.royalty
-from harsimrana_pubs.dbo.titles as t
+from dkinganjatou1_pubs.dbo.titles as t
 where price >= 11 or royalty > 10
 
 
@@ -192,7 +192,7 @@ select ProductID,
 	   UnitPrice,
 	   UnitsInStock,
 	   ReorderLevel
-from harsimrana_Northwind.dbo.products
+from dkinganjatou1_Northwind.dbo.products
 --where UnitsInStock >= 30 and UnitsInStock <= 40
 where UnitsInStock >= 30 and UnitsInStock !> 40  -- not greater than
 order by UnitsInStock desc

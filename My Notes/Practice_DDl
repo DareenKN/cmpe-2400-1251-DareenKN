@@ -1,0 +1,64 @@
+-- Use master as another database first
+use master
+go
+
+-- Drop DB/ Create DB commented out
+drop database if exists dkinganjatou1_ERD
+create database dkinganjatou1_ERD
+
+-- Use my newly created DB
+use dkinganjatou1_ERD
+go
+
+-- Dropping tables
+drop table if exists Passengers
+drop table if exists Bookings
+drop table if exists Flights
+drop table if exists Payments
+drop table if exists Airlines
+drop table if exists Airports
+go 
+
+
+-- Creating tables
+create table Airports
+(
+    AirportCode int not null primary key
+)
+go
+
+create table Airlines
+(
+    AirlineCode int not null primary key
+)
+go
+
+create table Payments
+(
+    PaymentConfirmationNumber  varchar(40)
+        constraint PK_Payments_PaymentConfirmation
+            primary key
+)
+go 
+
+create table Flights
+(
+    FlightCode varchar(18)
+    constraint PK_Flights_FlightCode
+        primary key
+)
+
+create table Bookings
+(
+    ConfirmationNumber char(11)
+        constraint FK
+)
+go
+
+create table Passengers
+(
+    InstructorID int not null primary key,
+    FirstName varchar(50) not null,
+    LastName varchar(50) not null
+)
+go

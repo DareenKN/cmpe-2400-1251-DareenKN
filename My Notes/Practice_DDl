@@ -51,7 +51,8 @@ create table Flights
 create table Bookings
 (
     ConfirmationNumber char(11)
-        constraint FK
+        constraint FK_Bookings_ConfimationNumber foreign key 
+            references Payments(ConfirmationNumber)
 )
 go
 

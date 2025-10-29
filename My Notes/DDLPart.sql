@@ -77,7 +77,7 @@ values( 'Simran', 'Aulaka', '780-000-0000', '0000 0 st NW Edmonton', 'T6T0A0')
 
 insert into customer 
 	( firstname, lastname, phone, address, postalcode)
-values( 'dkinganjatou1', 'Aulaka', '780-000-0000', '0000 0 st NW Edmonton', 'T6T0A0')
+values( 'Dareen', 'Njatou', '780-000-0000', '0000 0 st NW Edmonton', 'T6T0A0')
 
 
 select top 1 customerid

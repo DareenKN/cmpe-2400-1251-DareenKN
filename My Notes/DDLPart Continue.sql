@@ -4,14 +4,14 @@
 use master
 go
 
---drop database if exists harsimran_1251_DDL_A02
---go
----- create new database
---create database harsimran_1251_DDL_A02
---go
+-- drop database if exists dkinganjatou1_1251_DDL_A02
+-- go
+-- create new database
+-- create database dkinganjatou1_1251_DDL_A02
+-- go
 
 -- now switch newly created database
-use harsimran_1251_DDL_A02
+use dkinganjatou1_1251_DDL_A02
 go
 
 -- if there is no relation between tables,
@@ -21,7 +21,7 @@ go
 drop table if exists studenttocourse
 drop table if exists students
 drop table if exists instructors
-drop table if exists coursesz
+drop table if exists courses
 
 go
 
@@ -77,7 +77,7 @@ exec sp_help studenttocourse
 
 -- Date Functions
 
-use harsimrana_Northwind
+use dkinganjatou1_Northwind
 select  * 
 from Orders
 where year(OrderDate) = 2020

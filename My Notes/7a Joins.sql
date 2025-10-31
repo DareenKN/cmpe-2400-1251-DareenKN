@@ -36,4 +36,11 @@ from Products p
     inner join Categories c -- Keyword inner is optional
     on p.CategoryID = c.CategoryID -- Joining condition
 
+-- Let's combine 3 table
+select *
+from Products p
+    inner join Categories c -- Keyword inner is optional -- second
+        on p.CategoryID = c.CategoryID -- Joining condition
+    inner join [Order Details] od
+        on od.ProductID = p.ProductID
 -- SQL SERVER

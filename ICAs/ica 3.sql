@@ -22,3 +22,5 @@ select	CustomerID,
 from Customers
 where Fax is null and Region is not null 
 order by Country asc, City desc
+
+

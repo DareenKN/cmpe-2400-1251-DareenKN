@@ -48,7 +48,7 @@ use dkinganjatou1_pubs
 go
 -- author, titleauthor and titles
 -- Name of the author, title
-select  a.au_lname + ' ' + a.au_fname as "Name of Author",
+select  a.au_lname + space(1) + a.au_fname as "Name of Author",
         t.title
 from titleauthor ta
     inner join titles t

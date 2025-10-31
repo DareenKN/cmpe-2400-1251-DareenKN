@@ -43,4 +43,16 @@ from Products p
         on p.CategoryID = c.CategoryID -- Joining condition
     inner join [Order Details] od
         on od.ProductID = p.ProductID
+
+use dkinganjatou1_pubs
+go
+-- author, titleauthor and titles
+-- Name of the author, title
+select  a.au_lname + ' ' + a.au_fname as "Name of Author",
+        t.title
+from titleauthor ta
+    inner join titles t
+        on t.title_id = ta.title_id
+    inner join authors a
+        on a.au_id = ta.au_id
 -- SQL SERVER

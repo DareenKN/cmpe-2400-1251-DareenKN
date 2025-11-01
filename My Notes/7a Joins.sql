@@ -14,7 +14,7 @@
     data type and same values
 */
 
-use dkinganjatou1_Northwind
+use NorthwindTraders
 go
 
 -- INNER join
@@ -44,7 +44,7 @@ from Products p
     inner join [Order Details] od
         on od.ProductID = p.ProductID
 
-use dkinganjatou1_pubs
+use Publishers
 go
 -- author, titleauthor and titles
 -- Name of the author, title

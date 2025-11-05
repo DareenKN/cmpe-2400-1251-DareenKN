@@ -86,7 +86,7 @@ where year(OrderDate) = 2020
 select day('2019-09-23') as 'Day',
        month('2019-09-23') 'Month' ,
 	   year('2019-09-23') 'Year',
-	   datepart(dy, '2025-09-23')
+	   datepart(dayofyear, '2025-01-01')
 	   
 select OrderDate,
        day(OrderDate),

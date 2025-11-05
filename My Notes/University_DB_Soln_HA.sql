@@ -42,7 +42,7 @@ go
 
 /*alter table Courses drop constraint chk_credits
 go*/
-alter table Courses add constraint chk_Courses_credits check (Credits between 1 and 5)
+alter table Courses add constraint chk_Courses_credits check (Credits between 1 and 6)
 
 
 create table Instructors (
@@ -72,7 +72,11 @@ create table Enrollments(
 )
 
 -- Testing part
---insert into courses (Coursename, Department, credits)
---values ('CMPE2000','CNT',7)
+insert into courses (Coursename, Department, credits)
+values ('CMPE2000','CNT',6)
 
---delete from courses
+
+delete from courses
+
+select *
+from courses

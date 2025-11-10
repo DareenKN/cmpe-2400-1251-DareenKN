@@ -122,10 +122,10 @@ go
 select s.CompanyName 'Supplier',
     count(distinct p.ProductName) 'Number of Product Types',
     coalesce(sum(p.UnitsInStock), 0) 'Total Units',
-    format(coalesce(avg(coalesce(p.UnitPrice, 0)), 0), 'C', 'en-US') 'Average Unit Price'
+    left(format(coalesce(avg(coalesce(p.UnitPrice, 0)), 0), 'C', 'en-US'), 20) 'Average Unit Price'
 from Suppliers s
     left join Products p
         on s.SupplierID = p.SupplierID
 group by s.CompanyName
 having coalesce(avg(coalesce(p.UnitPrice, 0)), 0) < 20
-order by s.CompanyName;
+order by s.CompanyName

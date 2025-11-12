@@ -5,7 +5,7 @@ This question assumes use of ClassTrak database.
 Rearrange the SQL Statement to retrieve a complete list of any instructors and/or students who are part of classes where the Class_Id is 60, 94 or NULL.
 */
 
-use ClassTrak
+use dkinganjatou1_ClassTrak
 go
 
 select cast(i.first_name + ' ' + i.last_name as varchar(30)) 'Instructor',
@@ -72,43 +72,27 @@ This question assumes use of ClassTrak database.
 
 Provide the select statement that will return the Assignment Type Description and Assignment Description (formatted as shown), the calculated average (score/max score), and number of marked assignments. Only include results for class id 88, and for those assignment types with a calculated average greater than 57. Sort the results by the first column.
 */
-
-use ClassTrak;
+use dkinganjatou1_ClassTrak
 go
 
 select  r.ass_desc + '(' + at.ass_type_desc + ')'  'Desc(Type)',
-    round(avg(cast(re.score as decimal(5,2)) / r.max_score * 100), 2) 'avg',
+    round(avg(re.score / r.max_score * 100), 2) 'Avg',
     count(re.student_id) 'Num Marked'
 from Assignment_type at
     right outer join Requirements  r 
         on r.ass_type_id = at.ass_type_id
     left outer join Results re
         on re.req_id = r.req_id
--- where round(avg(cast(re.score as decimal(5,2)) / r.max_score * 100), 2) is null
 group by at.ass_type_desc, r.ass_desc, r.class_id
-having round(avg(cast(re.score as decimal(5,2)) / r.max_score * 100), 2) > 57 or r.class_id = 88 
-order by 1;
+having  r.class_id = 88 and round(avg(re.score / r.max_score * 100), 2) > 57 
+order by 1
 
 select distinct class_id
 FROM Requirements
-WHERE class_id = 88;
+WHERE class_id = 88
 
 select distinct class_id
 FROM Results
-
-
-select r.ass_desc + '(' + at.ass_type_desc + ')' 'Desc(Type)',
-        round(avg(re.score / r.max_score * 100), 2) 'Avg',
-        count(re.student_id) 'Num Marked'
-from Requirements r
-    left outer join Assignment_type at 
-        on r.ass_type_id = at.ass_type_id
-right outer join Results re
-    ON re.req_id = r.req_id
-group by at.ass_type_desc, r.ass_desc, r.class_id
-having round(avg(re.score / r.max_score * 100), 2) > 57
-    or r.class_id = 54
-order by 1
 
 -- Question 5
 /*

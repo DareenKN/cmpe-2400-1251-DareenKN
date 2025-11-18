@@ -176,24 +176,34 @@ Paste your SQL statement below - this question will be graded manually by your i
 */
 
 select 
-    format(f.arrivaltime, 'hh:mm:ss') as time,
-    f.flightnumber,
-    'arriving' as "arriving or departing"
-from flights f
-where f.arrivalairport = 'lester b. pearson international airport'
-  and f.flightdate = '2022-12-22'
+    left(format(f.Arrival, 'hh:mm:ss'), 10) "Time",
+    f.FlightNumber,
+    'Arriving' "Arriving or Departing"
+from Flights f
+where f.ArrivalAirport in (
+                            select a.AirportCode from Airports a
+                            where a.Name = 'Lester B. Pearson International Airport'
+                          )
+  and f.Date = '2022-12-22'
 
 union all
 
 select 
-    format(f.departuretime, 'hh:mm:ss') as time,
-    f.flightnumber,
-    'departing' as "arriving or departing"
-from flights f
-where f.departureairport = 'lester b. pearson international airport'
-  and f.flightdate = '2022-12-22'
+    left(format(f.Arrival, 'HH:mm:ss'), 10) "Time",
+    f.FlightNumber,
+    'Departing' "Arriving or Departing"
+from Flights f
+where f.DepartureAirport in (
+                              select a.AirportCode from Airports a
+                              where a.Name = 'Lester B. Pearson International Airport'
+                            )
+  and f.Date = '2022-12-22'
 
-order by time asc;
+order by [Time] asc
+
+select * from Flights
+select * from Airports a
+where a.Name = 'Lester B. Pearson International Airport'
 
 -- Question 10
 /*
@@ -202,13 +212,13 @@ This question assumes use of Lab2_FlightsOfFancy database.
 Rearrange the SQL Statement to select the sum and average payment amount for each payment type. Include payment type, sum, average amount in the select list which should be sorted in descending order according payment type. Make sure all columns have valid names. Any dollar amounts shall be formatted as currency to a length of 30.
 */
 
-select
-    paymenttype,
-    convert(varchar(30), format(sum(amount), 'c'), 1) as "sum",
-    convert(varchar(30), format(avg(amount), 'c'), 1) as "average"
-from payments
-group by paymenttype
-order by paymenttype desc;
+select 
+    PaymentType , 
+    convert(varchar(30), Format(Sum(Amount),'C'),1) 'Sum', 
+    convert(varchar(30), Format(AVG(Amount),'C'),1) 'Average' 
+from Payments 
+group by PaymentType 
+order by 1 desc 
 
 
 -- Question 11
@@ -220,26 +230,26 @@ Return the ConfirmationNumber, Flight Code [First 12 characters only], Amount Pa
 Paste your SQL statement below - this question will be graded manually by your instructor.
 */
 select
-    b.confirmationnumber,
-    left(f.flightcode, 12) as "flight code",
-    p.amount as "amount paid",
-    count(pas.customerid) as "number of passengers"
-from bookings b
-join flights f
-    on b.flightcode = f.flightcode
-join payments p
-    on b.paymentconfirmationnumber = p.paymentconfirmationnumber
-join passengers pas
-    on b.confirmationnumber = pas.confirmationnumber
+    b.ConfirmationNumber,
+    left(f.FlightCode, 12) "Flight Code",
+    p.Amount "Amount Paid",
+    count(pas.CustomerId) "Number of Passengers"
+from Bookings b
+join Flights f
+    on b.FlightCode = f.FlightCode
+join Payments p
+    on b.PaymentConfirmationNumber = p.PaymentConfirmationNumber
+join Passengers pas
+    on b.ConfirmationNumber = pas.ConfirmationNumber
 group by 
-    b.confirmationnumber,
-    f.flightcode,
-    p.amount
-having count(pas.customerid) >= 3
-   and p.amount between 830 and 3720
+    b.ConfirmationNumber,
+    f.FlightCode,
+    p.Amount
+having count(pas.CustomerId) >= 3
+   and p.Amount between 830 and 3720
 order by 
-    b.confirmationnumber asc,
-    "flight code" desc;
+    b.ConfirmationNumber asc,
+    "Flight Code" desc
 
 
 
@@ -273,23 +283,25 @@ Travel Agent
 Paste your SQL statement below - this question will be graded manually by your instructor.
 */
 
-declare @fromcity varchar(50) = 'denver';
-declare @tocity varchar(50) = 'vancouver';
-declare @flightnumber varchar(50) = 'aca1023';
-declare @departuredate date = '2022-12-24';
-declare @travelagentcode int = 89597;
+declare @FromCity varchar(50) = 'denver';
+declare @ToCity varchar(50) = 'vancouver';
+declare @FlightNumber varchar(50) = 'aca1023';
+declare @DepartureDate date = '2022-12-24';
+declare @TravelAgentCode int = 89597;
 
 select
-    pas.customerid,
-    left(pas.firstname, 11) as firstname,
-    left(pas.lastname, 13) as lastname,
+    c.customerid,
+    left(c.FirstName, 11) as firstname,
+    left(c.LastName, 13) as lastname,
     f.flightcode as "cancelled flight code",
     nf.flightcode as "next flight code",
-    nf.departuretime as departure,
+    nf.departure as departure,
     nf.departureairport as departureairport,
     nf.arrivalairport as arrivalairport,
-    @travelagentcode as "travel agent"
-from passengers pas
+    @TravelAgentCode as "travel agent"
+from Customers c
+join Passengers pas
+    on pas.CustomerId = c.CustomerId
 join bookings b
     on pas.confirmationnumber = b.confirmationnumber
 join flights f
@@ -298,15 +310,15 @@ join flights nf
     on nf.airlinecode = f.airlinecode
     and nf.departureairport = f.departureairport
     and nf.arrivalairport = f.arrivalairport
-    and nf.departuredate > f.departuredate
-where f.flightcode = @flightnumber
+    and nf.departure > f.departure
+where f.flightcode = @FlightNumber
   and f.departureairport in (
-        select airportcode from airports where city = @fromcity
+        select airportcode from airports where city = @FromCity
     )
   and f.arrivalairport in (
-        select airportcode from airports where city = @tocity
+        select airportcode from airports where city = @ToCity
     )
-order by pas.customerid;
+order by c.customerid
 
 
 
@@ -323,7 +335,7 @@ join bookings b
     on f.flightcode = b.flightcode
 group by 
     f.flightcode,
-    f.flightnumber,
+    f.FlightNumber,
     f.date,
     f.departureairport,
     f.departuretime,

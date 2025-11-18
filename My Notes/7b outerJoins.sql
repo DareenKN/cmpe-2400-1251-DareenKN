@@ -93,4 +93,4 @@ from discounts d
  
 --Cross Join
 select*
-from discounts,stores
+from discounts,stores  

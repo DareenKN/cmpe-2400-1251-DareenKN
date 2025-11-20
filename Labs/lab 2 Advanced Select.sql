@@ -124,9 +124,6 @@ order by
     day(timestamp) asc;
 
 
- select DateNAME(dw, Timestamp) 'Weekday', DAY(Timestamp) 'Day of Month', left(format(SUM(Amount),'C'),20) 'Earnings', COUNT(*) 'Number of Payments' from payments where MONTH(Timestamp) = 8 and year(Timestamp) = 2022 group by Timestamp order by 2      
-
-
 -- Question 7
 
 /*
@@ -347,20 +344,40 @@ select f.*
 from Flights f
 where exists  (
                 -- Flight has at least one passenger
-                select 1
+                select *
                 from Bookings b
-                join Passengers p
-                    on p.ConfirmationNumber = b.ConfirmationNumber
+                  join Passengers p
+                      on p.ConfirmationNumber = b.ConfirmationNumber
                 where b.FlightCode = f.FlightCode
               )
 and not exists(
                 -- There is NO passenger whose CustomerId is the same
                 -- as the BookingCustomerId (i.e. no self-bookers)
-                select 1
+                select *
                 from Bookings b
-                join Passengers p
-                    on p.ConfirmationNumber = b.ConfirmationNumber
-                  and p.CustomerId = b.BookingCustomerId
+                  join Passengers p
+                      on p.ConfirmationNumber = b.ConfirmationNumber                  
                 where b.FlightCode = f.FlightCode
+                and p.CustomerId = b.BookingCustomerId
+              )
+order by f.FlightCode
+
+
+select f.*
+from Flights f
+where exists  (                
+                select *
+                from Bookings b
+                  join Passengers p
+                      on p.ConfirmationNumber = b.ConfirmationNumber
+                where b.FlightCode = f.FlightCode
+              )
+and not exists(                
+                select *
+                from Bookings b
+                  join Passengers p
+                      on p.ConfirmationNumber = b.ConfirmationNumber                  
+                where b.FlightCode = f.FlightCode
+                and p.CustomerId = b.BookingCustomerId
               )
 order by f.FlightCode

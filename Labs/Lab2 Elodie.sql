@@ -34,11 +34,11 @@ from Payments p
 where exists 
 			(
 				select *
-				from bookings b
-								join flights f
-								on f.FlightCode = b.FlightCode 
-								join airports a
-								on a.AirportCode =  f.DepartureAirport 
+				from bookings b
+								join flights f
+								on f.FlightCode = b.FlightCode 
+								join airports a
+								on a.AirportCode =  f.DepartureAirport 
 				where a.IATA like 'Y%' and 
 				b.PaymentConfirmationNumber = p.PaymentConfirmationNumber
 
@@ -105,7 +105,7 @@ from Airlines a
 where a.AirlineCode NOT IN  (
 								select f.AirlineCode 
 								from Flights f
-							 )        
+							 )        
 
 --Q8
 
@@ -123,12 +123,12 @@ order by [NumFlights] desc
 use Lab2_FlightsOfFancy
 go
 
-select convert(varchar(10), f.Arrival, 108)  'Time',
-          f.FlightNumber 'FlightNumber',
-          'Arriving'  [Arriving or Departing]
+select convert(varchar(10), f.Arrival, 108)  'Time',
+          f.FlightNumber 'FlightNumber',
+          'Arriving'  [Arriving or Departing]
 from Flights f
-                join Airports a
-                on f.ArrivalAirport = a.AirportCode
+                join Airports a
+                on f.ArrivalAirport = a.AirportCode
 where a.[Name] = 'Lester B. Pearson International Airport'
 and f.[Date] = '2022-12-22'
 
@@ -137,16 +137,16 @@ union all
 
 
 
-select    convert(varchar(10), f.Departure, 108)  'Time',
-             f.FlightNumber 'FlightNumber',
-            'Departing'  [Arriving or Departing]
+select    convert(varchar(10), f.Departure, 108)  'Time',
+             f.FlightNumber 'FlightNumber',
+            'Departing'  [Arriving or Departing]
 from Flights f
-                join Airports a
-                on f.DepartureAirport = a.AirportCode       
+                join Airports a
+                on f.DepartureAirport = a.AirportCode       
 where a.[Name] = 'Lester B. Pearson International Airport'
 and f.[Date] = '2022-12-22'
 
-order by [Time] 
+order by [Time] 
 
  
 
@@ -166,17 +166,17 @@ use Lab2_FlightsOfFancy
 go
 
 select b.ConfirmationNumber,
-       left(b.FlightCode, 12) 'Flight Code',
-       p.Amount 'Amount Paid',
-       count(pas.CustomerId) 'Number of Passengers'
+       left(b.FlightCode, 12) 'Flight Code',
+       p.Amount 'Amount Paid',
+       count(pas.CustomerId) 'Number of Passengers'
 from Bookings b
-                join Payments p
-                on b.PaymentConfirmationNumber = p.PaymentConfirmationNumber
-                join Passengers pas
-                on b.ConfirmationNumber = pas.ConfirmationNumber
+                join Payments p
+                on b.PaymentConfirmationNumber = p.PaymentConfirmationNumber
+                join Passengers pas
+                on b.ConfirmationNumber = pas.ConfirmationNumber
 group by b.ConfirmationNumber, b.FlightCode, p.Amount
-having count (pas.CustomerId) >= 3 
-       and p.Amount between 800 and 3600
+having count (pas.CustomerId) >= 3 
+       and p.Amount between 800 and 3600
 order by b.ConfirmationNumber, FlightCode desc
 
 --Q12
@@ -193,29 +193,29 @@ declare @DepartureDate date = '2022-12-24'
 declare @TravelAgentCode int = 89460
 
 select distinct c.CustomerID 'CustomerId',
-       left(c.FirstName, 16) 'FirstName',
-       left(c.LastName, 20) 'LastName',
-       b.FlightCode 'Cancelled Flight Code',
-       f.FlightCode 'Next Flight Code',
-       f.Departure,
-       f.DepartureAirport,
-       f.ArrivalAirport,
-       @TravelAgentCode 'Travel Agent'
-    
+       left(c.FirstName, 16) 'FirstName',
+       left(c.LastName, 20) 'LastName',
+       b.FlightCode 'Cancelled Flight Code',
+       f.FlightCode 'Next Flight Code',
+       f.Departure,
+       f.DepartureAirport,
+       f.ArrivalAirport,
+       @TravelAgentCode 'Travel Agent'
+    
 from Bookings b
-                join Flights f
-                    on f.FlightCode = b.FlightCode
-                 join Passengers ps
-                    on b.ConfirmationNumber = ps.ConfirmationNumber
-                join Customers c
-                    on ps.CustomerID = c.CustomerID
-                join Airports a
-                    on  a.AirportCode = f.DepartureAirport
-                join Airports a1
-                    on a1.AirportCode = f.ArrivalAirport
-            
+                join Flights f
+                    on f.FlightCode = b.FlightCode
+                 join Passengers ps
+                    on b.ConfirmationNumber = ps.ConfirmationNumber
+                join Customers c
+                    on ps.CustomerID = c.CustomerID
+                join Airports a
+                    on  a.AirportCode = f.DepartureAirport
+                join Airports a1
+                    on a1.AirportCode = f.ArrivalAirport
+            
 where a.City = @FromCity
-and a1.City  = @ToCity
+and a1.City  = @ToCity
 order by c.CustomerId
 
 

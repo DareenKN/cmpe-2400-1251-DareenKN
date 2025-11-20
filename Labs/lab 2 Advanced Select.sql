@@ -2,7 +2,7 @@
 /*
 This question assumes use of Lab2_FlightsOfFancy database. 
 
-Select the airport name & IATA code formatted as Name (IATA), city, country, and TimeZone of the airport. Show the city and country as one column titled "Serving City" with a comma between the city and the country. Only display results where the airport does not have “International” in its name and the IATA does not start with Y. Order the results by Country then City, both in alphabetical order. *Format the first two columns to the following widths: 60 for the first column and 30 for the second column*
+Select the airport name & IATA code formatted as Name (IATA), City, country, and TimeZone of the airport. Show the City and country as one column titled "Serving City" with a comma between the City and the country. Only display results where the airport does not have “International” in its name and the IATA does not start with Y. Order the results by Country then City, both in alphabetical order. *Format the first two columns to the following widths: 60 for the first column and 30 for the second column*
 
 If you choose to use a table alias, you must use a
 */
@@ -28,13 +28,13 @@ Use the first letter of each needed table as the table alias, and use that alias
 */
 select  b.FlightCode,
         b.ConfirmationNumber,
-        count(p.CustomerId) 'Number of Passengers'
+        count(p.CustomerID) 'Number of Passengers'
 from Bookings b
         join Passengers p
           on b.ConfirmationNumber = p.ConfirmationNumber
 group by  b.FlightCode,
           b.ConfirmationNumber
-having count(p.CustomerId) > 5
+having count(p.CustomerID) > 5
 
 
 -- Question 3
@@ -48,10 +48,10 @@ select  LEFT(FORMAT(AVG(p.Amount), 'C'), 10) "Average Payment Amount"
 FROM payments p
 where exists (
               select b.FlightCode
-              from bookings b
-                join flights f
+              from Bookings b
+                join Flights f
                     on f.FlightCode = b.FlightCode
-                join airports a
+                join Airports a
                     on a.AirportCode = f.DepartureAirport
               where b.PaymentConfirmationNumber = p.PaymentConfirmationNumber
               and a.IATA like 'Y%'
@@ -63,7 +63,7 @@ where exists (
 /*
 This question assumes use of Lab2_FlightsOfFancy database.
 
-Select all flight codes, and total of all payments by flight, having total payment amounts less than   4,803 dollars. Any flights with no payments must be listed as having payments of $0. Order the results by Total Payment (largest at the top) then by FlightCode (ascending order).
+Select all flight codes, and total of all payments by flight, having total payment amounts less than   4,803 dollars. Any Flights with no payments must be listed as having payments of $0. Order the results by Total Payment (largest at the top) then by FlightCode (ascending order).
 
 Use the first letter of each table as the alias.
 */
@@ -84,19 +84,19 @@ order by 2 desc, 1 asc
 /*
 This question assumes use of Lab2_FlightsOfFancy database. 
 
-List all flight dates, and the number of flights on that date leaving YEG that do not have any passengers booked. Join syntax must be used – no subqueries. Order the results by ascending date.
+List all flight Dates, and the number of Flights on that Date leaving YEG that do not have any passengers booked. Join syntax must be used – no subqueries. Order the results by ascending Date.
 */
 select  f.Date,
-        count(distinct f.flightcode) "Number of Flights with No Passengers"
-from flights f
-  left join bookings b
-    on f.flightcode = b.flightcode
+        count(distinct f.FlightCode) "Number of Flights with No Passengers"
+from Flights f
+  left join Bookings b
+    on f.FlightCode = b.FlightCode
   left join passengers p
     on b.ConfirmationNumber = p.ConfirmationNumber
   left join Airports a
-    on f.departureAirport = a.AirportCode
+    on f.DepartureAirport = a.AirportCode
 where a.IATA = 'YEG'
-  and p.CustomerId is null
+  and p.CustomerID is null
 group by f.Date
 order by f.Date asc
 
@@ -110,7 +110,7 @@ Rearrange the SQL Statement to select the amount of money that was made each day
 */
 
 select
-    datename(dw, timestamp) as weekday,
+    Datename(dw, timestamp) as weekday,
     day(timestamp) as "day of month",
     left(format(sum(amount), 'c'), 20) as earnings,
     count(*) as "number of payments"
@@ -118,13 +118,13 @@ from payments
 where year(timestamp) = 2022
   and month(timestamp) = 8
 group by
-    datename(dw, timestamp),
+    Datename(dw, timestamp),
     day(timestamp)
 order by
     day(timestamp) asc;
 
 
- select DATENAME(dw, Timestamp) 'Weekday', DAY(Timestamp) 'Day of Month', left(format(SUM(Amount),'C'),20) 'Earnings', COUNT(*) 'Number of Payments' from payments where MONTH(Timestamp) = 8 and year(Timestamp) = 2022 group by Timestamp order by 2      
+ select DateNAME(dw, Timestamp) 'Weekday', DAY(Timestamp) 'Day of Month', left(format(SUM(Amount),'C'),20) 'Earnings', COUNT(*) 'Number of Payments' from payments where MONTH(Timestamp) = 8 and year(Timestamp) = 2022 group by Timestamp order by 2      
 
 
 -- Question 7
@@ -132,14 +132,14 @@ order by
 /*
 This question assumes use of Lab2_FlightsOfFancy database.
 
-Rearrange the SQL Statement to find the name(s) of the airlines without any scheduled flights. (Use a subquery for your answer.)
+Rearrange the SQL Statement to find the name(s) of the airlines without any scheduled Flights. (Use a subquery for your answer.)
 */
      
 select a.name
 from airlines a
 where a.airlinecode not in (
     select f.airlinecode
-    from flights f
+    from Flights f
 );
 
 
@@ -149,7 +149,7 @@ where a.airlinecode not in (
  /*
  This question assumes use of Lab2_FlightsOfFancy database. 
 
-Select the name(s) of airline(s) with the most number of scheduled flights in December 2022. Use the first letter of each table as an alias.
+Select the name(s) of airline(s) with the most number of scheduled Flights in December 2022. Use the first letter of each table as an alias.
  */
 
  select top 1
@@ -166,7 +166,7 @@ order by count(f.FlightCode) desc;
 /*
 This question assumes use of Lab2_FlightsOfFancy database. 
 
-Select the time and flight number for all flights going into and out of the 'Lester B. Pearson International Airport' on December 22, 2022. Ensure the time displayed is appropriate (the arrival time for flights entering Lester B. Pearson and departure time for flights leaving Lester B. Pearson). Include a column stating "Arriving" if it's an arrival or "Departing" if it's a departure. Sort the results by time in ascending order.
+Select the time and flight number for all Flights going into and out of the 'Lester B. Pearson International Airport' on December 22, 2022. Ensure the time displayed is appropriate (the arrival time for Flights entering Lester B. Pearson and departure time for Flights leaving Lester B. Pearson). Include a column stating "Arriving" if it's an arrival or "Departing" if it's a departure. Sort the results by time in ascending order.
 
 Choose the best set operator to use for this situation. Penalty applies if an inefficient choice is made. 
 
@@ -225,7 +225,7 @@ order by 1 desc
 /*
 This question assumes use of Lab2_FlightsOfFancy database. 
 
-Return the ConfirmationNumber, Flight Code [First 12 characters only], Amount Paid, and number of passengers for bookings with 3 or more passengers. No subqueries may be used in your solution. Order your results by ConfirmationNumber [ascending order] then by Flight Code [Make sure to use Alias for sorting] in descending. Only include records whose payment amount is between 830 and 3,720. 
+Return the ConfirmationNumber, Flight Code [First 12 characters only], Amount Paid, and number of passengers for Bookings with 3 or more passengers. No subqueries may be used in your solution. Order your results by ConfirmationNumber [ascending order] then by Flight Code [Make sure to use Alias for sorting] in descending. Only include records whose payment amount is between 830 and 3,720. 
 
 Paste your SQL statement below - this question will be graded manually by your instructor.
 */
@@ -233,7 +233,7 @@ select
     b.ConfirmationNumber,
     left(f.FlightCode, 12) "Flight Code",
     p.Amount "Amount Paid",
-    count(pas.CustomerId) "Number of Passengers"
+    count(pas.CustomerID) "Number of Passengers"
 from Bookings b
 join Flights f
     on b.FlightCode = f.FlightCode
@@ -245,7 +245,7 @@ group by
     b.ConfirmationNumber,
     f.FlightCode,
     p.Amount
-having count(pas.CustomerId) >= 3
+having count(pas.CustomerID) >= 3
    and p.Amount between 830 and 3720
 order by 
     b.ConfirmationNumber asc,
@@ -270,7 +270,7 @@ TravelAgentCode = 89597
 
 Only return these columns:
 
-CustomerId
+CustomerID
 FirstName (formatted to include a maximum of 11 characters)
 LastName (formatted to include a maximum of 13 characters)
 FlightCode of cancelled flight
@@ -283,67 +283,84 @@ Travel Agent
 Paste your SQL statement below - this question will be graded manually by your instructor.
 */
 
-declare @FromCity varchar(50) = 'denver';
-declare @ToCity varchar(50) = 'vancouver';
-declare @FlightNumber varchar(50) = 'aca1023';
-declare @DepartureDate date = '2022-12-24';
+declare @FromCity varchar(50) = 'Denver';
+declare @ToCity varchar(50) = 'Vancouver';
+declare @FlightNumber varchar(50) = 'ACA1023';
+declare @DepartureDate Date = '2022-12-24';
 declare @TravelAgentCode int = 89597;
 
 select
-    c.customerid,
-    left(c.FirstName, 11) as firstname,
-    left(c.LastName, 13) as lastname,
-    f.flightcode as "cancelled flight code",
-    nf.flightcode as "next flight code",
-    nf.departure as departure,
-    nf.departureairport as departureairport,
-    nf.arrivalairport as arrivalairport,
-    @TravelAgentCode as "travel agent"
+    distinct c.CustomerId,
+    left(c.FirstName, 11) "FirstName",
+    left(c.LastName, 13) "LastName",
+    f.FlightCode "Cancelled Flight Code",
+    nf.FlightCode "Next Flight Code",
+    nf.Departure,
+    nf.DepartureAirport,
+    nf.ArrivalAirport,
+    @TravelAgentCode "Travel Agent"
 from Customers c
-join Passengers pas
-    on pas.CustomerId = c.CustomerId
-join bookings b
-    on pas.confirmationnumber = b.confirmationnumber
-join flights f
-    on b.flightcode = f.flightcode
-join flights nf
-    on nf.airlinecode = f.airlinecode
-    and nf.departureairport = f.departureairport
-    and nf.arrivalairport = f.arrivalairport
-    and nf.departure > f.departure
-where f.flightcode = @FlightNumber
-  and f.departureairport in (
-        select airportcode from airports where city = @FromCity
-    )
-  and f.arrivalairport in (
-        select airportcode from airports where city = @ToCity
-    )
-order by c.customerid
+    join Passengers pas
+        on pas.CustomerID = c.CustomerID
+    join Bookings b
+        on pas.ConfirmationNumber = b.ConfirmationNumber
+    join Flights f
+        on b.FlightCode = f.FlightCode
+    join Flights nf
+        on nf.AirlineCode = f.AirlineCode
+        and nf.DepartureAirport = f.DepartureAirport
+        and nf.ArrivalAirport = f.ArrivalAirport
+        and nf.Departure = (
+                              select min(f2.Departure)
+                              from Flights f2
+                              where f2.AirlineCode = f.AirlineCode
+                              and f2.DepartureAirport = f.DepartureAirport
+                              and f2.ArrivalAirport = f.ArrivalAirport
+                              and f2.Departure > f.Departure
+                            )
+where f.FlightNumber = @FlightNumber
+  and f.DepartureAirport in (
+                              select AirportCode 
+                              from Airports 
+                              where City = @FromCity
+                            )
+  and f.ArrivalAirport in (
+                            select AirportCode 
+                            from Airports 
+                            where City = @ToCity
+                          )
+order by c.CustomerId
 
 
+select * from Flights
+select * from Airports
 
 -- Question 13
 /*
 This question assumes use of Lab2_FlightsOfFancy database. 
 
-List all columns for flights that only have passengers that did not book their own tickets. Results are sorted by FlightCode.
+List all columns for Flights that only have passengers that did not book their own tickets. Results are sorted by FlightCode.
 */
 
+
 select f.*
-from flights f
-join bookings b
-    on f.flightcode = b.flightcode
-group by 
-    f.flightcode,
-    f.FlightNumber,
-    f.date,
-    f.departureairport,
-    f.departuretime,
-    f.arrivalairport,
-    f.arrivaltime,
-    f.flightduration,
-    f.cancelled,
-    f.isfull,
-    f.airlinecode
-having count(case when b.customerid = b.bookedby then 1 end) = 0
-order by f.flightcode;
+from Flights f
+where exists  (
+                -- Flight has at least one passenger
+                select 1
+                from Bookings b
+                join Passengers p
+                    on p.ConfirmationNumber = b.ConfirmationNumber
+                where b.FlightCode = f.FlightCode
+              )
+and not exists(
+                -- There is NO passenger whose CustomerId is the same
+                -- as the BookingCustomerId (i.e. no self-bookers)
+                select 1
+                from Bookings b
+                join Passengers p
+                    on p.ConfirmationNumber = b.ConfirmationNumber
+                  and p.CustomerId = b.BookingCustomerId
+                where b.FlightCode = f.FlightCode
+              )
+order by f.FlightCode

@@ -102,19 +102,19 @@ where o.OrderID in  (
 -- Select all the information for the concerned employees
 select *
 from Employees e
-where e.EmployeeID in   (
-                            select o.EmployeeID
-                            from [orders] o
-                            where o.OrderID in  (
-                                                    select od.OrderID
-                                                    from [order Details] od
-                                                    where od.ProductID =    (
-                                                                                select p.ProductID
-                                                                                from Products p
-                                                                                where p.UnitPrice = (
-                                                                                                        select max(p1.UnitPrice)
-                                                                                                        from Products p1
-                                                                                                    )
-                                                                            )
-                                                )
-                        )
+where e.EmployeeID in(
+                      select o.EmployeeID
+                      from [orders] o
+                      where o.OrderID in  (
+                                            select od.OrderID
+                                            from [order Details] od
+                                            where od.ProductID =    (
+                                                                      select p.ProductID
+                                                                      from Products p
+                                                                      where p.UnitPrice = (
+                                                                                            select max(p1.UnitPrice)
+                                                                                            from Products p1
+                                                                                          )
+                                                                    )
+                                          )
+                      )

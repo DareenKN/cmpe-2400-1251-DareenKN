@@ -106,7 +106,7 @@ go
 select top 3 with ties title as 'Title',
        price * ytd_sales as 'Revenues'
 from titles
-order by price * ytd_sales desc
+--order by price * ytd_sales desc
 
 union all -- combine both resutl sets
 -- we want to find 3 stores from which we have got the most revenues

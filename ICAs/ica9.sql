@@ -79,8 +79,8 @@ You get paid 10 bucks per phone number... you have the potential to make big mon
 
 Paste your SQL statement below - this question will be graded manually by your instructor.
 */
-
-(
+select *
+from(
 -- NorthWindTraders
 -- Employees
   select left(e.LastName + ', ' + e.FirstName, 50) 'Name',
@@ -157,12 +157,12 @@ union all
     a.Phone
   from Publishers.dbo.Authors a
 --where a.Phone is not null
-) 
+) Data
 order by Country, Name
 
 
-
-(
+select *
+from (
 -- NorthWindTraders
 -- Employees
   select left(e.LastName + ', ' + e.FirstName, 50) 'Name',
@@ -219,8 +219,8 @@ union all
     left('USA', 20) as 'Country',
     a.Phone
   from Publishers.dbo.Authors a
-)
-order by Country, Name
+) myData
+order by myData.Country, myData.Name
 
 -- Question 4
 /*
@@ -234,36 +234,35 @@ Paste your SQL statement below - this question will be graded manually by your i
 
 -- EMPLOYEES (Top 3 per year)
 
-  select *
-  from (
-select
-      distinct top 3
-      'Employees' as Category,
-      left(e.LastName + ' ' + e.FirstName, 50) 'Entity',
-      datepart(year, o.OrderDate) 'Year',
-      sum(od.Quantity) 'TotalQuantity'
-    from NorthwindTraders.dbo.Employees e
-      join NorthwindTraders.dbo.Orders o
-      on e.EmployeeID = o.EmployeeID
-      join NorthwindTraders.dbo.[Order Details] od
-      on o.OrderID = od.OrderID
-    group by
-        e.LastName, e.FirstName,
-        datepart(year, o.OrderDate)
-    order by TotalQuantity desc
-) Employees
-
+select *
+from (
+  select
+        distinct top 3
+        'Employees' 'Category',
+        left(e.LastName + ' ' + e.FirstName, 50) 'Entity',
+        datepart(year, o.OrderDate) 'Year',
+        sum(od.Quantity) 'Total Quantity'
+      from NorthwindTraders.dbo.Employees e
+        join NorthwindTraders.dbo.Orders o
+        on e.EmployeeID = o.EmployeeID
+        join NorthwindTraders.dbo.[Order Details] od
+        on o.OrderID = od.OrderID
+      group by
+          e.LastName, e.FirstName,
+          datepart(year, o.OrderDate)
+      order by 4 desc
+  ) Employees
 
 union all
 
-  select *
-  from (
+select *
+from (
   -- CUSTOMERS (Top 3 per year)
   select distinct top 3
       'Customers' 'Category',
       left(c.CompanyName, 50) 'Entity',
       datepart(year, o.OrderDate) 'Year',
-      sum(od.Quantity) as TotalQuantity
+      sum(od.Quantity) 'Total Quantity'
     from NorthwindTraders.dbo.Customers c
       join NorthwindTraders.dbo.Orders o
       on c.CustomerID = o.CustomerID
@@ -272,19 +271,19 @@ union all
     group by
         c.CompanyName,
         datepart(year, o.OrderDate)
-    order by TotalQuantity desc
+    order by 4 desc
 ) Customers
 
 union all
 
-  select *
-  from (
+select *
+from (
   -- SUPPLIERS (Top 4 per year)
   select distinct top 4
       'Suppliers' as Category,
-      left(s.CompanyName, 50) as Entity,
+      left(s.CompanyName, 50) 'Entity',
       datepart(year, o.OrderDate) 'Year',
-      sum(od.Quantity) 'TotalQuantity'
+      sum(od.Quantity) 'Total Quantity'
     from NorthwindTraders.dbo.Suppliers s
       join NorthwindTraders.dbo.Products p
       on s.SupplierID = p.SupplierID
@@ -295,7 +294,6 @@ union all
     group by
         s.CompanyName,
         datepart(year, o.OrderDate)
-
 ) Suppliers
-order by TotalQuantity desc
+order by 4 desc
 

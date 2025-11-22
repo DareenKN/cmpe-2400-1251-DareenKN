@@ -80,124 +80,213 @@ You get paid 10 bucks per phone number... you have the potential to make big mon
 Paste your SQL statement below - this question will be graded manually by your instructor.
 */
 
-select top 100 percent
-    left(Name, 50) as Name,
-    left(Country, 20) as Country,
-    Phone
-from (
-    /* ====================== Northwind ====================== */
+(
+    -- NorthWindTraders
+    -- Employees
+    select  left(e.LastName + ', ' + e.FirstName, 50) 'Name',
+            left(e.Country, 20) 'Country',
+            e.HomePhone 'Phone'
+    from NorthwindTraders.dbo.Employees e
+    --where e.HomePhone is not null
 
-    /* Customers with CompanyName */
-    select
-        left(C.CompanyName, 50) as Name,
-        left(C.Country, 20) as Country,
-        C.Phone
-    from NorthwindTraders.dbo.Customers C
-    where C.CompanyName is not null
-      and C.Phone is not null
-
-    union all
-
-    /* Customers with First/Last Name */
-    select
-        left(P.LastName + ', ' + P.FirstName, 50) as Name,
-        left(P.Country, 20) as Country,
-        P.Phone
-    from (
-        select
-            LastName, FirstName, Country, Phone
-        from NorthwindTraders.dbo.Customers
-        where CompanyName is null
-          and Phone is not null
-    ) P
+    -- union all
+    -- -- Shippers
+    -- select  distinct s.CompanyName 'Name',
+    --         o.ShipCountry 'Country',
+    --         s.Phone 'Phone'
+    -- from NorthwindTraders.dbo.Shippers s
+    --   join NorthwindTraders.dbo.Orders o
+    --     on o.ShipVia = s.ShipperID
+    -- where s.Phone is not null
 
     union all
+    -- Suppliers
+    select  left(su.CompanyName, 50) 'Name',
+            left(su.Country,20) 'Country',
+            su.Phone 'Phone'
+    from NorthwindTraders.dbo.Suppliers su
+    --where su.Phone is not null
+    
+    union all
+    -- Customers with CompanyName
+    select  left(c.CompanyName, 50) 'Name',
+            left(c.Country, 20) 'Country',
+            c.Phone 'Phone'
+    from NorthwindTraders.dbo.Customers c
+    --where c.Phone is not null
 
-    /* Employees */
-    select
-        left(E.LastName + ', ' + E.FirstName, 50) as Name,
-        left(E.Country, 20) as Country,
-        E.HomePhone as Phone
-    from NorthwindTraders.dbo.Employees E
-    where E.HomePhone is not null
+    -- AdventureWorksLT
+
+     -- Customers with CompanyName 
+    union all
+    select  distinct left(c.CompanyName, 50) 'Name',
+            left(a.CountryRegion, 20) 'Country',
+            c.Phone 'Phone'
+    from AdventureWorksLT.dbo.Customer c
+        join AdventureWorksLT.dbo.CustomerAddress ca
+          on c.CustomerID = ca.CustomerID
+        join AdventureWorksLT.dbo.Address a
+          on ca.AddressID = a.AddressID
+    --where c.Phone is not null
 
 
-    /* ====================== AdventureWorksLT ====================== */
+    -- Chinook
+    -- Chinook Customers 
+    union all
+    select  left(c.LastName + ', ' + C.FirstName, 50) 'Name',
+            left(c.Country, 20) 'Country',
+            c.Phone 'Phone'
+    from Chinook.dbo.Customer c
+    --where c.Phone is not null
 
-    /* Customers with CompanyName */
+    -- Chinook Employees 
+    union all
+    select  left(e.LastName + ', ' + e.FirstName, 50) 'Name',
+            left(e.Country, 20) 'Country',
+            e.Phone 'Phone'
+    from Chinook.dbo.Employee e
+    --where e.Phone is not null
+
+
+    -- Publishers (All USA) 
+    -- Authors 
     union all
     select
-        left(C.CompanyName, 50) as Name,
-        left(A.CountryRegion, 20) as Country,
-        C.Phone
-    from AdventureWorksLT.dbo.Customer C
-        join AdventureWorksLT.dbo.CustomerAddress CA on C.CustomerID = CA.CustomerID
-        join AdventureWorksLT.dbo.Address A on CA.AddressID = A.AddressID
-    where C.CompanyName is not null
-      and C.Phone is not null
-
-    /* Customers with First/Last Name */
-    union all
-    select
-        left(P.LastName + ', ' + P.FirstName, 50) as Name,
-        left(A.CountryRegion, 20) as Country,
-        C.Phone
-    from AdventureWorksLT.dbo.Customer C
-        join AdventureWorksLT.dbo.Customer P on C.CustomerID = P.CustomerID
-        join AdventureWorksLT.dbo.CustomerAddress CA on C.CustomerID = CA.CustomerID
-        join AdventureWorksLT.dbo.Address A on CA.AddressID = A.AddressID
-    where C.CompanyName is null
-      and C.Phone is not null
+        left(a.au_lname + ', ' + a.au_fname, 50) 'Name',
+        left('USA', 20) as 'Country',
+        a.Phone
+    from Publishers.dbo.Authors a
+    --where a.Phone is not null
+) 
+order by Country, Name
 
 
-    /* ====================== Chinook ====================== */
 
-    /* Chinook Customers */
-    union all
-    select
-        left(C.LastName + ', ' + C.FirstName, 50) as Name,
-        left(C.Country, 20) as Country,
-        C.Phone
-    from Chinook.dbo.Customer C
-    where C.Phone is not null
+(
+  -- NorthWindTraders
+  -- Employees
+  select  left(e.LastName + ', ' + e.FirstName, 50) 'Name',
+          left(e.Country, 20) 'Country',
+          e.HomePhone 'Phone'
+  from NorthwindTraders.dbo.Employees e
 
-    /* Chinook Employees */
-    union all
-    select
-        left(E.au_lname + ', ' + E.FirstName, 50) as Name,
-        left(E.Country, 20) as Country,
-        E.Phone
-    from Chinook.dbo.Employee E
-    where E.Phone is not null
+  union all
+  -- Suppliers
+  select  left(su.CompanyName, 50) 'Name',
+          left(su.Country,20) 'Country',
+          su.Phone 'Phone'
+  from NorthwindTraders.dbo.Suppliers su
+  
+  union all
+  -- Customers with CompanyName
+  select  left(c.CompanyName, 50) 'Name',
+          left(c.Country, 20) 'Country',
+          c.Phone 'Phone'
+  from NorthwindTraders.dbo.Customers c
+
+  -- AdventureWorksLT
+    -- Customers with CompanyName 
+  union all
+  select  distinct left(c.CompanyName, 50) 'Name',
+          left(a.CountryRegion, 20) 'Country',
+          c.Phone 'Phone'
+  from AdventureWorksLT.dbo.Customer c
+      join AdventureWorksLT.dbo.CustomerAddress ca
+        on c.CustomerID = ca.CustomerID
+      join AdventureWorksLT.dbo.Address a
+        on ca.AddressID = a.AddressID
+
+  -- Chinook
+  -- Chinook Customers 
+  union all
+  select  left(c.LastName + ', ' + C.FirstName, 50) 'Name',
+          left(c.Country, 20) 'Country',
+          c.Phone 'Phone'
+  from Chinook.dbo.Customer c
+
+  -- Chinook Employees 
+  union all
+  select  left(e.LastName + ', ' + e.FirstName, 50) 'Name',
+          left(e.Country, 20) 'Country',
+          e.Phone 'Phone'
+  from Chinook.dbo.Employee e
+
+  -- Publishers (All USA) 
+  -- Authors 
+  union all
+  select
+      left(a.au_lname + ', ' + a.au_fname, 50) 'Name',
+      left('USA', 20) as 'Country',
+      a.Phone
+  from Publishers.dbo.Authors a
+) 
+order by Country, Name
+
+-- Question 4
+/*
+This question assumes use of NorthwindTraders database. 
+
+Management wants to know who's on top! The top 3 Employees, the top 3 Customers, and the top 4 Suppliers - 10 prizes to be awarded in all! To qualify, in your category, you must be within the top 3 (or 4) of total quantity sold across all orders you are related to, in any given year. Results must be combined, with Category displayed as shown, and ordered by highest to lowest Total Quantity. Notice that there are 3 records for Employees, 3 records for Customers, and 4 records for Suppliers. Employees are listed by "Lastname Firstname"; others are listed by Company name. 
+
+Paste your SQL statement below - this question will be graded manually by your instructor.
+*/
+
+(
+    -- EMPLOYEES (Top 3 per year)
+    select 
+        distinct top 3 'Employees' as Category,
+        left(e.LastName + ' ' + e.FirstName, 50) 'Entity',
+        datepart(year, o.OrderDate) 'Year',
+        sum(od.Quantity) 'TotalQuantity'
+    from NorthwindTraders.dbo.Employees e
+        join NorthwindTraders.dbo.Orders o
+            on e.EmployeeID = o.EmployeeID
+        join NorthwindTraders.dbo.[Order Details] od
+            on o.OrderID = od.OrderID
+    group by
+        e.LastName, e.FirstName,
+        datepart(year, o.OrderDate)
 
 
-    /* ====================== Publishers (All USA) ====================== */
+union all
 
-    /* Authors */
-    union all
-    select
-        left(A.au_lname + ', ' + A.au_fname, 50) as Name,
-        left('USA', 20) as Country,
-        A.Phone
-    from Publishers.dbo.Authors A
-    where A.Phone is not null
 
-    /* Publisher Companies */
-      union all
-    select
-        left(P.Name, 50) as Name,
-        left('USA', 20) as Country,
-        P.Phone
-    from Publishers.dbo.Publishers P
-    where P.Phone is not null
-) X
-order by Country, Name;
+    -- CUSTOMERS (Top 3 per year)
+    select distinct top 3
+        'Customers' as Category,
+        left(c.CompanyName, 50) as Entity,
+        datepart(year, o.OrderDate) as Year,
+        sum(od.Quantity) as TotalQuantity
+    from NorthwindTraders.dbo.Customers c
+        join NorthwindTraders.dbo.Orders o
+            on c.CustomerID = o.CustomerID
+        join NorthwindTraders.dbo.[Order Details] od
+            on o.OrderID = od.OrderID
+    group by
+        c.CompanyName,
+        datepart(year, o.OrderDate)
 
-select
-        left(P.Name, 50) as Name,
-        left('USA', 20) as Country,
-        P.Phone
-    from Publishers.dbo.Publishers P
 
-select *
-    from Publishers.dbo.Publishers P
+union all
+
+
+    -- SUPPLIERS (Top 4 per year)
+    select distinct top 4
+        'Suppliers' as Category,
+        left(s.CompanyName, 50) as Entity,
+        datepart(year, o.OrderDate) as Year,
+        sum(od.Quantity) as TotalQuantity
+    from NorthwindTraders.dbo.Suppliers s
+        join NorthwindTraders.dbo.Products p
+            on s.SupplierID = p.SupplierID
+        join NorthwindTraders.dbo.[Order Details] od
+            on p.ProductID = od.ProductID
+        join NorthwindTraders.dbo.Orders o
+            on o.OrderID = od.OrderID
+    group by
+        s.CompanyName,
+        datepart(year, o.OrderDate)
+)
+
+order by TotalQuantity desc
+

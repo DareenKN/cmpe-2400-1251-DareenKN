@@ -42,14 +42,14 @@ declare @grade CHAR
 
 if @marks >= 50
         begin
-    set @grade = 'A'
-    print 'You are pass'
-end
+            set @grade = 'A'
+            print 'You are pass'
+        end
     else
         begin
-    set @grade = 'F'
-    print 'Come again in the next term'
-end
+            set @grade = 'F'
+            print 'Come again in the next term'
+        end
 print 'Your Grade = ' + @grade
 
 -- case which is similar to switch statement in C#
@@ -108,4 +108,55 @@ while @i <= 10
     end
 
 print 'Sum of Numbers = ' + convert(varchar(10), @sum)
-    
+
+-- 3.User Defined functions/Stored Procedure
+use dkinganjatou1_pubs
+go
+
+-- Alternative 1
+drop procedure if exists SP_AuthorNames
+go
+
+-- Alternative 2
+if exists
+(
+    select [name]
+    from sysobjects
+    where [name] = 'SP_AuthorNames'
+)
+drop procedure SP_AuthorNames
+go
+
+-- Define a stored procedure
+create procedure SP_AuthorNames
+as
+    select au_fname + ' ' + au_lname 'AuthorName'
+    from dkinganjatou1_pubs.dbo.authors -- Better to use fully qualified names here
+go        
+
+-- To run stored procedures
+execute SP_AuthorNames
+-- Shorter form, same result
+exec SP_AuthorNames
+
+
+-- Making sure to drop procedure
+drop procedure if exists SP_TitlesInfo
+go
+
+-- Create procedure with parameter
+create procedure SP_TitlesInfo
+-- You can include parameters
+@TitleId varchar(6)
+as 
+    select * 
+    from dkinganjatou1_pubs.dbo.titles
+    where title_id = @TitleId
+go
+
+exec SP_TitlesInfo 'BU1032'
+
+exec sp_help titles
+
+
+

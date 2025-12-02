@@ -93,4 +93,19 @@ print case
     else -- default case in switch statement
         'Grade is F'
     end
+
+-- 2b. Looping: while loop
+declare @i int = 1
+declare @sum int = 0
+
+print 'Numbers from from 1 to 10'
+
+while @i <= 10
+    begin
+        print @i
+        set @sum = @sum + @i
+        set @i = @i + 1
+    end
+
+print 'Sum of Numbers = ' + convert(varchar(10), @sum)
     
